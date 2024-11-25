@@ -1,15 +1,25 @@
 class Solution:
     def characterReplacement(self, s: str, k: int) -> int:
-        # 1) find the identical string window
-        # 2) always replace it to get the max length
-        # 3) store the max length through iteration
+        """TODO:
+            use left, right pointer to define window:
+            keep track of current freq of each char and max_sub
+            while k > 0:
+                replace 1 char; update freq map and max_sub;
+                move right += 1;
+                k -= 1
+            if max_sub < len(s):
+                left += 1,right = left, k = k;
+                continue k replacement looping
+            if left = len(s) - k:
+                return max_sub
+        """
 
         if k >= len(s):
             return len(s)
 
         # str_win = 
         max_rep = k
-        ma_sub = k 
+        max_sub = 0 
 
         #use left, right to define the window
         left, right = 0, 0
