@@ -1,3 +1,5 @@
+from collections import Counter
+
 class Solution:
     def characterReplacement(self, s: str, k: int) -> int:
         """TODO:
@@ -13,36 +15,25 @@ class Solution:
             if left = len(s) - k:
                 return max_sub
         """
+        # the best version: 
+        string_length = len(s)
+        length_of_max_substring = 0
+        start = 0
+        char_freq = {}
+        most_freq_char = 0
 
-        if k >= len(s):
-            return len(s)
+        for end in range(string_length):
+            if s[end] not in char_freq:
+                char_freq[s[end]] = 1
+            else:
+                char_freq[s[end]] += 1
 
-        # str_win = 
-        max_rep = k
-        max_sub = 0 
+            most_freq_char = max(most_freq_char, char_freq[s[end]])
 
-        #use left, right to define the window
-        left, right = 0, 0
-        while left <= right and right <= len(s):
-
-            curr_char = s[left] # for each char, we need to find the longest possible substring
+            if end - start + 1 - most_freq_char > k:
+                char_freq[s[start]] -= 1
+                start += 1
             
-            while left <= right and right <= len(s) and k != 0:
-                print(s[left], s[right+1])
-                if s[left] != s[right+1]:
-                    print(s[left], s[right+1])
-                    exit()
-                exit()
-            # print(s[left:right])
-
-            # #update win:
-            # right += k
-            # print(s[left:right+1])
-
-            # if s[left] == s[right+1]:
-            #     print('same')
-            # print(s[left], s[right+1])
-
+            length_of_max_substring = max(end - start + 1, length_of_max_substring)
             
-
-            exit()
+        return length_of_max_substring
