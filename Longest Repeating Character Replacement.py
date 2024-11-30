@@ -23,17 +23,19 @@ class Solution:
         most_freq_char = 0
 
         for end in range(string_length):
+            # update the freq of end char:
             if s[end] not in char_freq:
-                char_freq[s[end]] = 1
+                char_freq[s[end]] = 1 
             else:
                 char_freq[s[end]] += 1
 
-            most_freq_char = max(most_freq_char, char_freq[s[end]])
+            most_freq_char = max(most_freq_char, char_freq[s[end]]) 
+            #max substring without repeating char is actually the max freq of a char after replacement
 
-            if end - start + 1 - most_freq_char > k:
+            if end - start + 1 - most_freq_char > k: # if the current substring needs replacement greater than k, we move start 1 step
                 char_freq[s[start]] -= 1
                 start += 1
             
-            length_of_max_substring = max(end - start + 1, length_of_max_substring)
+            length_of_max_substring = max(end - start + 1, length_of_max_substring) # update length_of_max_substring at each step
             
         return length_of_max_substring
