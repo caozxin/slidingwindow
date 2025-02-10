@@ -2,34 +2,39 @@ from collections import Counter
 
 class Solution:
     def minWindow(self, s: str, t: str) -> str:
-        # return
-        # print("hello")
         if not s or not t:
             return ""
-        # --> below are required
-        # t = 'a'
-        # s = 'abs'
-        count_t = Counter(t) 
-        len_t = len(t)
-        min_sub_b = ""
 
-        print(count_t, len_t)
+        count_t = Counter(t)
+        required_chars = len(t)
+        min_substr = ""
+        min_len = float("inf")
 
-        left, right = 0, 0
-        for left in range(len(s)):
-            
-            sub_s = s[left:right + 1]
-            curr_len = right - left + 1
+        window_count = Counter()
+        formed = 0  # Number of chars that match required frequency
+        left = 0  # Left pointer for shrinking window
 
-            if right < len(s) and curr_len < len_t: #1) condition
-                right += 1
-            elif set(sub_s).issubset(set(t)): # 2) condition, atm curr_len >= len_t:
-                print(sub_s)
-                print("matching t")
-                if len(min_sub_b) == 0 or len(sub_s) <= len(min_sub_b):
-                    min_sub_b = sub_s
-                    print("new min: ", min_sub_b)
-                left += 1
-            # exit()
+        for right in range(len(s)):  # Expanding window with for-loop
+            char = s[right]
+            window_count[char] += 1
 
-        return min_sub_b
+            if window_count[char] <= count_t[char]:  
+                formed += 1  # Increment only when contributing to required_chars
+
+            # Contract the window while it contains all required characters
+            while formed == required_chars:
+                window_size = right - left + 1
+                if window_size < min_len:
+                    min_len = window_size
+                    min_substr = s[left:right + 1]  # Update min substring
+
+                # Remove leftmost character and move left pointer
+                left_char = s[left]
+                window_count[left_char] -= 1
+
+                if window_count[left_char] < count_t[left_char]:  
+                    formed -= 1  # If removal affects `t`'s required count, decrease `formed`
+
+                left += 1  # Contract the window from the left
+
+        return min_substr
