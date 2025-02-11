@@ -1,3 +1,36 @@
+from collections import Counter
+
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
         
+        if not s:
+            return 0
+        # s = s[:4]
+        # print(s)
+        left, right = 0, 0
+        max_len = float('-inf')
+        # dict = Counter()
+        dict_sub = dict()
+
+        for right in range(len(s)):
+            #define the window here:
+            sub_str = s[left:right+1]
+            
+            curr_char = s[right]
+            print(curr_char)
+
+            if curr_char not in dict_sub.keys():
+                dict_sub[curr_char] = right
+                # print(dict_sub)
+            else: 
+                print(" find dup ", right)
+                left = dict_sub[curr_char] + 1
+                curr_len = right + 1 - left
+                print(left, curr_len)
+                if curr_len >= max_len:
+                    max_len = curr_len
+                print("max_len", max_len)
+                dict_sub[curr_char] = right # still update the dict_sub
+            # exit()
+
+        return max_len
