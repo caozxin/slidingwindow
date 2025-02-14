@@ -17,3 +17,13 @@ class Solution:
             dict_sub[curr_char] = right  # Update the last seen index of the character
 
         return max_len
+
+
+"""
+Key Fixes:
+Initialized max_len = 0 instead of float('-inf').
+Updated left only if the duplicate character’s previous index is greater than or equal to left.
+Updated max_len every iteration, not just when a duplicate is found.
+Fixed substring length calculation to right - left + 1.
+
+"""
