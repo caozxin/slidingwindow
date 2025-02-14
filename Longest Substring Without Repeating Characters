@@ -9,6 +9,7 @@ class Solution:
         # print(s)
         left, right = 0, 0
         max_len = float('-inf')
+        # max_len = 1
         # dict = Counter()
         dict_sub = dict()
 
@@ -19,18 +20,17 @@ class Solution:
             curr_char = s[right]
             print(curr_char)
 
-            if curr_char not in dict_sub.keys():
-                dict_sub[curr_char] = right
-                # print(dict_sub)
-            else: 
+            if curr_char in dict_sub.keys():
+                 
                 print(" find dup ", right)
                 left = dict_sub[curr_char] + 1
-                curr_len = right + 1 - left
-                print(left, curr_len)
-                if curr_len >= max_len:
-                    max_len = curr_len
-                print("max_len", max_len)
-                dict_sub[curr_char] = right # still update the dict_sub
+            curr_len = right + 1 - left
+            print(left, curr_len)
+            if curr_len >= max_len:
+                max_len = curr_len
+            print("max_len", max_len)
+            
+            dict_sub[curr_char] = right # still update the dict_sub
             # exit()
 
         return max_len
